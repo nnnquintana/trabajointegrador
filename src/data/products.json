@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "canelones",
+        "price": 3200,
+        "description": "canelos de pollo, verdura y queso",
+        "image": "http://localhost:3000/images/canelones.jpg"
+    },
+    {
+        "id": 2,
+        "name": "asado",
+        "price": 4500,
+        "description": "tira de asado, vacío y achuras",
+        "image": "http://localhost:3000/images/asado.jpg"
+    },
+    {
+        "id": 3,
+        "name": "pizza",
+        "price": 2800,
+        "description": "muzzarela, tomates secos y albahaca",
+        "image": "http://localhost:3000/images/pizza.jpg"
+      },
+    {
+        "id": 4,
+        "name": "hamburguesa",
+        "price": 3500,
+        "description": "medallón de carne, queso, lechuga y tomate",
+        "image": "http://localhost:3000/images/hamburguesa.jpg"
+    },
+    {
+        "id": 5,
+        "name": "ensaladas",
+        "price": 2100,
+        "description": "pollo, brotes verdes, palta y huevo",
+        "image": "http://localhost:3000/images/ensalada.jpg"
+    }
+]
