@@ -1,37 +1,37 @@
 [
     {
-        "id": 1,
-        "name": "canelones",
-        "price": 3200,
-        "description": "canelos de pollo, verdura y queso",
-        "image": "http://localhost:3000/images/canelones.jpg"
+      
+        "name": "Dulce de leche Latte",
+        "price": 2200,
+        "description": "Café espresso con dulce de leche, leche al vapor con crema batida y salsa de caramelo",
+        "image": "../images/dulcedelechelatte.jpg"
     },
     {
-        "id": 2,
-        "name": "asado",
-        "price": 4500,
-        "description": "tira de asado, vacío y achuras",
-        "image": "http://localhost:3000/images/asado.jpg"
-    },
-    {
-        "id": 3,
-        "name": "pizza",
+       
+        "name": "Cappucino",
         "price": 2800,
-        "description": "muzzarela, tomates secos y albahaca",
-        "image": "http://localhost:3000/images/pizza.jpg"
-      },
-    {
-        "id": 4,
-        "name": "hamburguesa",
-        "price": 3500,
-        "description": "medallón de carne, queso, lechuga y tomate",
-        "image": "http://localhost:3000/images/hamburguesa.jpg"
+        "description": "Café espresso, leche vaporizada y abundante espuma de leche.",
+        "image": "../images/cappucino.jpg"
     },
     {
-        "id": 5,
-        "name": "ensaladas",
+      
+        "name": "Americano",
+        "price": 2800,
+        "description": "Café espresso combinado con agua al mejor estilo americano.",
+        "image": "../images/americano.jpg"
+      },
+      {
+       
+        "name": "Mocha Blanco",
+        "price": 2500,
+        "description": "Chocolate blanco, shots de Espresso y leche vaporizada, con crema batida.",
+        "image": "../images/mochablanco.jpg"
+    },
+    {
+        
+        "name": "Te Verde",
         "price": 2100,
-        "description": "pollo, brotes verdes, palta y huevo",
-        "image": "http://localhost:3000/images/ensalada.jpg"
+        "description": "La base de hierbabuena de este té se complementa con notas de menta fresca y toques de verbena dulce y especiada.",
+        "image": "../images/teverde.jpg"
     }
 ]

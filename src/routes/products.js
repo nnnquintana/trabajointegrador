@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router ();
-const controller = require ('../controllers/productsControllers');
+const controllers = require ('../controllers/productsControllers');
+const logMiddleware = require ('../middlewares/loggerMiddleware');
 
-router.post ('/crear', controllers.crear);
-router.get ('/detalle/:id', controllers.detalle);
-router.get ('/listar/:name?', controllers.listar);
+router.post ('/', logMiddleware, controllers.crear);
+router.get ('/:id', controllers.detalle);
+router.get ('/', controllers.listar);
+router.put('/:id', logMiddleware, controllers.actualizar);
 
 module.exports = router;

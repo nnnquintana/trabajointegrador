@@ -1,49 +1,51 @@
-const fs = require ('fs');
-const path = require ('path');h
-
-const rutaJSON = path.resolve (__dirname, '../data/products.json');
-const dataJSON = fs.readFileSync (rutaJSON, {encoding:'utf8' });
-let products = JSON.parse (dataJSON);
+const Product = require ('../database/models/Product')
 
 const controller = {
+crear: async (req,res) => {
 
-crear: function (req,res) {
-const {name, price, description, image } = req.body;
-if (!name || !price || !description) {
-return res.status (400).json ({menssage: 'Por favor, proporcione todos los campos requeridos.'});
+ try {
+    let product = {
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        image: req.file.filename,
+    };
+
+   const productDatabase = await Product.create (product);
+
+   res.status (201).json(productDatabase);
+ } catch (error) {
+    console.log(error);
+
+    return res.status(500).json ({message: 'Internal server errror'});
+ }
+},
+
+
+listar: async (req,res) => {
+try {
+    const products = await Product.find({});
+res.status (200).json (products);
+} catch (error) {
+    console.log (error);
+    res.status (500).json ({message:'Internal server error'});
 }
+},
 
-const nuevoProducto = {
-    id: products.length + 1,
-    name,
-    price,
-    description,
-    image,
+detalle: async (req,res) => {
+let id = +req.params.id;
+try {
+    const products = await Product.findById(id);
+    if (!product){
+        return res.status(404).json ({message:'Producto no encontrado'});
+    }
+    res.status (200).json (product);
+    } catch (error){
+        console.log(error);
+        res.status (500).json ({message:'Internal server error'});
+    }
+},
 };
 
-products.push (nuevoProducto);
-
-let productsJson =JSON.stringify(products, null, 4);
-
-fs.writeFileSync(rutaJSON, productsJson, { encoding: 'utf8' });
-
-res.status (201).json(nuevoProducto);
-},
-
-listar: function (req,res) {
-const {name} = req.params;
-
-if (name) {
-const productosFiltrados = products.filter (producto => producto.name.tolowerCase ().includes (name.tolowerCase()));
-res.json (productosFiltrados);
-}else {
-res.json(products);}
-},
-
-detalle: function (req,res) {
-let id = +req.params.id;
-let products = products.find (product => product.id ==id);
-res.json (product);}
-}
 
 module.exports = controller;
