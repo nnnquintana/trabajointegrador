@@ -1,4 +1,4 @@
-const Product = require ('../database/models/Product')
+const Product = require('../database/models/Product');
 
 const controller = {
 crear: async (req,res) => {

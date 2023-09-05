@@ -2,16 +2,20 @@ const path = require ('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const productsControllers = require ('./controllers/productsControllers');
+const {connectDB, mongooseConnection } = require ('./database/Connect');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
+mongooseConnection.on ('error', (err)=> {
+    console.error ('Error de conexion ala base de datos:', err);});
 
-mongoose.connect('mongodb://localhost:27017/UnaCopadeCafe', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongooseConnection.once ('open', () => { 
+    console.log ('Conexion exitosa a la base de datos');
+
+app.use ('/products', productsControllers);
+app.use(bodyParser.json());
 
 const productSchema = new mongoose.Schema({
     name: String,
@@ -66,6 +70,9 @@ app.put('/products/:id', async (req, res) => {
     }
 });
 
-
-
 app.listen(3000,() => console.log ('servidor corriendo en puerto http://localhost:3000'));
+});
+
+connectDB().catch((error) => {
+    console.error('Error al conectar a la base de datos', error);
+});
