@@ -1,8 +1,9 @@
 const path = require ('path');
 const express = require('express');
+const multer = require('multer');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const productsControllers = require ('./controllers/productsControllers');
+const productsRoutes = require ('./routes/products');
 const {connectDB, mongooseConnection } = require ('./database/Connect');
 
 const app = express();
@@ -13,65 +14,33 @@ mongooseConnection.on ('error', (err)=> {
 
 mongooseConnection.once ('open', () => { 
     console.log ('Conexion exitosa a la base de datos');
+});
 
-app.use ('/products', productsControllers);
 app.use(bodyParser.json());
 
-const productSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-    description: String,
-    image: String
+const storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, path.join(__dirname, 'public/images')); 
+        },
+        filename: (req, file, cb) => {
+          const ext = path.extname(file.originalname);
+          cb(null, Date.now() + ext); 
+        },
+      });
+      
+const upload = multer({ storage });
+
+app.use ('/products', productsRoutes);
+
+
+app.post('/upload', upload.single('image'), (req, res) => {
+    res.status(200).json({ message: 'Imagen subida correctamente' });
 });
 
-const Product = mongoose.model('Product', productSchema);
 
-// Crear un producto
-app.post('/products', async (req, res) => {
-    const newProduct = req.body;
-    try {
-        const product = await Product.create(newProduct);
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al crear el producto' });
-    }
-});
 
-// Listar todos los productos
-app.get('/products', async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los productos' });
-    }
-});
+app.listen(3000, () => console.log('Servidor corriendo en puerto http://localhost:3000'));
 
-// Ver el detalle de un producto
-app.get('/products/:id', async (req, res) => {
-    const productId = req.params.id;
-    try {
-        const product = await Product.findById(productId);
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener el producto' });
-    }
-});
-
-// Actualizar un producto
-app.put('/products/:id', async (req, res) => {
-    const productId = req.params.id;
-    const updatedProduct = req.body;
-    try {
-        const product = await Product.findByIdAndUpdate(productId, updatedProduct, { new: true });
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al actualizar el producto' });
-    }
-});
-
-app.listen(3000,() => console.log ('servidor corriendo en puerto http://localhost:3000'));
-});
 
 connectDB().catch((error) => {
     console.error('Error al conectar a la base de datos', error);
